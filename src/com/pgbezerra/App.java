@@ -6,6 +6,7 @@ import com.pgbezerra.services.LargeShippingService;
 import com.pgbezerra.services.MediumShippingService;
 import com.pgbezerra.services.ShippingService;
 import com.pgbezerra.services.SmallShippingService;
+import com.pgbezerra.services.UltraLargeShippingService;
 
 public class App {
 
@@ -14,11 +15,15 @@ public class App {
 		ShippingService largerService = new LargeShippingService();
 		ShippingService mediumService = new MediumShippingService();
 		ShippingService smallSerice = new SmallShippingService();
-		Product product = new Product("Filme - A volta dos que não foram", 10.0, Size.SMALL);
+		ShippingService ultraLargeService = new UltraLargeShippingService();
+		
+		Product product = new Product("Filme - A volta dos que não foram", 10.0, Size.ULTRA_LARGE);
 		
 		
-		largerService.setShippingSercice(mediumService);
-		mediumService.setShippingSercice(smallSerice);
+		largerService
+		.addHandle(mediumService)
+		.addHandle(ultraLargeService)
+		.addHandle(smallSerice);
 		
 		largerService.calculateShippingFee(product);
 		
